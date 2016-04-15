@@ -1,8 +1,10 @@
 Group A 
-Name: (Roll Number)
+Names: Aditya Kumar Akash  (120050046)
+       Nishant Kumar Singh (120050043)
 
 Group B
-Name: (Roll Number)
+Names: Shyam JVS        (120050052)
+       Anurag Shirolkar (120050003)
 
 
-Add a well documented and commented code of your experiments in the respective folders.
+This directory contains documented and commented code for lab experiments of both the groups in the respective folders.
