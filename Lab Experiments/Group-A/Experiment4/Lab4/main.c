@@ -18,14 +18,21 @@
 #define CR_F   (*((volatile unsigned long *)0x40025524))
 volatile uint32_t ui32TempValueS = 25;
 
+/*
+* Function Name: switchPinConfig()
+* Input: none
+* Output: none
+* Description: Set PORTF Pin 0 and Pin 4 as input. Note that Pin 0 is locked.
+* Example Call: switchPinConfig();
+*/
 void switchPinConfig(void)
 {
-	// Following two line removes the lock from SW2 interfaced on PORTF Pin0 -- leave this unchanged
+	// Following two line removes the lock from SW2 interfaced on PORTF Pin0
 	LOCK_F=0x4C4F434BU;
 	CR_F=GPIO_PIN_0|GPIO_PIN_4;
 
 	// GPIO PORTF Pin 0 and Pin4
-	GPIODirModeSet(GPIO_PORTF_BASE,GPIO_PIN_4,GPIO_DIR_MODE_IN); // Set Pin-4 of PORT F as Input. Modifiy this to use another switch
+	GPIODirModeSet(GPIO_PORTF_BASE,GPIO_PIN_4,GPIO_DIR_MODE_IN); // Set Pin-0, 4 of PORT F as Input.
 	GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 	GPIOPadConfigSet(GPIO_PORTF_BASE,GPIO_PIN_4,GPIO_STRENGTH_12MA,GPIO_PIN_TYPE_STD_WPU);
 
@@ -34,18 +41,24 @@ void switchPinConfig(void)
 	GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 }
 
-
+/*
+* Function Name: UARTIntHandler()
+* Input: none
+* Output: none
+* Description: UART Interrupt Handler function for getting and putting characters.
+*/
 void UARTIntHandler(void)
 {
 
 	uint32_t ui32Status;
-	ui32Status = UARTIntStatus(UART0_BASE, true); //get interrupt status
+	ui32Status = UARTIntStatus(UART0_BASE, true); 	//get interrupt status
 
-	UARTIntClear(UART0_BASE, ui32Status); //clear the asserted interrupts
+	UARTIntClear(UART0_BASE, ui32Status); 		//clear the asserted interrupts
 
 	char c = UARTCharGetNonBlocking(UART0_BASE);
 	if( c != 'S') return ;
 
+	// Display a string asking to enter temperature.
 	UARTCharPut(UART0_BASE, 'E');
 	UARTCharPut(UART0_BASE, 'n');
 	UARTCharPut(UART0_BASE, 't');
@@ -60,12 +73,10 @@ void UARTIntHandler(void)
 
 
 	int s = 0;
-
-
-
 	SysCtlDelay(2*SysCtlClockGet());
 
-	while(UARTCharsAvail(UART0_BASE)) //loop while there are chars
+	// Loop while there are chars to be read.
+	while(UARTCharsAvail(UART0_BASE))
 	{
 		c = UARTCharGetNonBlocking(UART0_BASE);
 		UARTCharPutNonBlocking(UART0_BASE,c);
@@ -74,6 +85,7 @@ void UARTIntHandler(void)
 		SysCtlDelay(SysCtlClockGet());
 	}
 
+	// Display that the temperature entered is set.
 	UARTCharPut(UART0_BASE, '\r');
 	UARTCharPut(UART0_BASE, '\n');
 	UARTCharPut(UART0_BASE, 'S');
@@ -115,11 +127,13 @@ void UARTIntHandler(void)
 }
 
 int main(void) {
+	// Declare a buffer for ADC0 sequencer of size 4.
+	// And variables for storing sample average.
 	uint32_t ui32ADC0Value[4];
 	volatile uint32_t ui32TempAvg;
 	volatile uint32_t ui32TempValueC;
 
-
+	// Setup system clock, peripherals and GPIO.
 	SysCtlClockSet(SYSCTL_SYSDIV_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
@@ -127,6 +141,7 @@ int main(void) {
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
 
+	// Describe the action to be performed for each ADC sequencer step.
 	switchPinConfig();
 	ADCSequenceConfigure(ADC0_BASE, 1, ADC_TRIGGER_PROCESSOR, 0);
 	ADCSequenceStepConfigure(ADC0_BASE, 1, 0, ADC_CTL_TS);
@@ -149,6 +164,10 @@ int main(void) {
 	IntEnable(INT_UART0);
 	UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
 
+	// Keep taking temperature samples from the ADC periodically.
+	// Calculate the average of every 4 samples and check if it is > or < than the set temperature.
+	// Correspondingly glow the Red/Green LED.
+	// Also, the set temparature can be changed using the UART Interrupt. (By pressing the character 'S')
 	while(1)
 	{
 		ADCIntClear(ADC0_BASE, 1);
@@ -229,16 +248,11 @@ int main(void) {
 
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-
+/* The main function for Part-1 of the assignment. */
 int test1(void) {
+	// Initial setup same of ADC, clock, peripherals, etc same as like in the above function.
 	uint32_t ui32ADC0Value[4];
 	volatile uint32_t ui32TempAvg;
 	volatile uint32_t ui32TempValueC;
@@ -262,6 +276,8 @@ int test1(void) {
 	GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 	UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
+	// Keep taking temperature samples from the ADC periodically.
+	// Calculate the average of every 4 samples and display it using UART.
 	while(1) {
 		ADCIntClear(ADC0_BASE, 1);
 		ADCProcessorTrigger(ADC0_BASE, 1);

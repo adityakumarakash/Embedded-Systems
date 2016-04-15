@@ -82,21 +82,24 @@ void switchPinConfig(void)
 
 int main(void)
 {
-	// Perform the initial setup and pin configuration.
 	uint8_t ui8LED = 2;
 	bool sw1Pressed = 1;
 	bool sw2Pressed = 0;
 	setup();
 	ledPinConfig();
 	switchPinConfig();
+	/*---------------------
 
-	// Keep checking periodically if switch-1 and switch-2 are pressed.
-	// And correspondingly change the LED in use and the 'sw2status' counter.
+		* Write your code here
+		* You can create additional functions
+		*
+
+
+	---------------------*/
 	while(1){
 
 		if(GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_4)==0x00)
 		{
-			// Switch 1 is pressed.
 			sw1Pressed = 0;
 			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, ui8LED);
 
@@ -117,7 +120,6 @@ int main(void)
 		}
 		if(GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_0)==0x00)
 		{
-			// Switch 2 is pressed.
 			if(sw2Pressed == 0){
 				sw2Status++;
 				sw2Pressed = 1;

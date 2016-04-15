@@ -45,7 +45,7 @@ void ledPinConfig(void)
 */
 void switchPinConfig(void)
 {
-	// Following two line removes the lock from SW2 interfaced on PORTF Pin0 -- leave this unchanged
+	// Following two line removes the lock from SW2 interfaced on PORTF Pin0
 	LOCK_F=0x4C4F434BU;
 	CR_F=GPIO_PIN_0|GPIO_PIN_4;
 
@@ -82,7 +82,7 @@ int main(void)
 * Function Name: detectKeyPress
 * Input : int
 * Output : int
-* Description : Modifies the state of the system based on the key presses.
+* Description : Returns when a key is pressed (after debouncing) using system's state.
 */
 int detectKeyPress(int32_t sw)
 {

@@ -260,4 +260,134 @@ int main(void)
 
 	}
 
+	// This is the code for the first part of the assignment.
+	// Comment the above part and uncomment the below part for the 1st part.
+
+	/*
+	volatile uint32_t ui32Load;
+	volatile uint32_t ui32PWMClock;
+	volatile uint8_t ui8AdjustR;
+	volatile uint8_t ui8AdjustG;
+	volatile uint8_t ui8AdjustB;
+	ui8AdjustR = 254;
+	ui8AdjustG = 10;
+	ui8AdjustB = 10;
+
+	SysCtlClockSet(SYSCTL_SYSDIV_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
+	SysCtlPWMClockSet(SYSCTL_PWMDIV_64);
+
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+
+
+	GPIOPinTypePWM(GPIO_PORTF_BASE, GPIO_PIN_1);
+	GPIOPinConfigure(GPIO_PF1_M1PWM5);
+
+	GPIOPinTypePWM(GPIO_PORTF_BASE, GPIO_PIN_2);
+	GPIOPinConfigure(GPIO_PF2_M1PWM6);
+
+	GPIOPinTypePWM(GPIO_PORTF_BASE, GPIO_PIN_3);
+	GPIOPinConfigure(GPIO_PF3_M1PWM7);
+
+
+	HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY;
+	HWREG(GPIO_PORTF_BASE + GPIO_O_CR) |= 0x01;
+	HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = 0;
+	GPIODirModeSet(GPIO_PORTF_BASE, GPIO_PIN_4|GPIO_PIN_0, GPIO_DIR_MODE_IN);
+	GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_4|GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+
+
+	ui32PWMClock = SysCtlClockGet() / 64;
+	ui32Load = (ui32PWMClock / PWM_FREQUENCY) - 1;
+	PWMGenConfigure(PWM1_BASE, PWM_GEN_1, PWM_GEN_MODE_DOWN);
+	PWMGenPeriodSet(PWM1_BASE, PWM_GEN_1, ui32Load);
+
+	PWMGenConfigure(PWM1_BASE, PWM_GEN_2, PWM_GEN_MODE_DOWN);
+	PWMGenPeriodSet(PWM1_BASE, PWM_GEN_2, ui32Load);
+
+	PWMGenConfigure(PWM1_BASE, PWM_GEN_3, PWM_GEN_MODE_DOWN);
+	PWMGenPeriodSet(PWM1_BASE, PWM_GEN_3, ui32Load);
+
+
+	PWMPulseWidthSet(PWM1_BASE, PWM_OUT_5, ui8AdjustR * ui32Load / 1000);
+	PWMOutputState(PWM1_BASE, PWM_OUT_5_BIT, true);
+	PWMGenEnable(PWM1_BASE, PWM_GEN_1);
+
+	PWMPulseWidthSet(PWM1_BASE, PWM_OUT_6, ui8AdjustG * ui32Load / 1000);
+	PWMOutputState(PWM1_BASE, PWM_OUT_6_BIT, true);
+	PWMGenEnable(PWM1_BASE, PWM_GEN_2);
+
+	PWMPulseWidthSet(PWM1_BASE, PWM_OUT_7, ui8AdjustB * ui32Load / 1000);
+	PWMOutputState(PWM1_BASE, PWM_OUT_7_BIT, true);
+	PWMGenEnable(PWM1_BASE, PWM_GEN_3);
+
+	uint32_t speed = 1;
+	uint8_t rg = 1;
+	uint8_t gb = 0;
+	uint8_t br = 0;
+
+	while(1)
+	{
+		if (rg) {
+			ui8AdjustR = ui8AdjustR - speed;
+			ui8AdjustG = ui8AdjustG + speed;
+		} else if (gb) {
+			ui8AdjustG = ui8AdjustG - speed;
+			ui8AdjustB = ui8AdjustB + speed;
+		} else if (br) {
+			ui8AdjustB = ui8AdjustB - speed;
+			ui8AdjustR = ui8AdjustR + speed;
+		} else {}
+		if (ui8AdjustR < 10)
+		{
+			ui8AdjustR = 10;
+		}
+		if (ui8AdjustG < 10)
+		{
+			ui8AdjustG = 10;
+		}
+		if (ui8AdjustB < 10)
+		{
+			ui8AdjustB = 10;
+		}
+		if (ui8AdjustR > 254)
+		{
+			ui8AdjustR = 254;
+			br = 0;
+			rg = 1;
+		}
+		if (ui8AdjustG > 254)
+		{
+			ui8AdjustG = 254;
+			rg = 0;
+			gb = 1;
+		}
+		if (ui8AdjustB > 254)
+		{
+			ui8AdjustB = 254;
+			gb = 0;
+			br = 1;
+		}
+		if(GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_4)==0x00)
+		{
+			speed--;
+			if (speed < 1) speed = 1;
+		}
+
+		if(GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_0)==0x00)
+		{
+			speed++;
+			if (speed > 10) speed = 10;
+		}
+		PWMPulseWidthSet(PWM1_BASE, PWM_OUT_5, ui8AdjustR * ui32Load / 1000);
+		PWMPulseWidthSet(PWM1_BASE, PWM_OUT_6, ui8AdjustB * ui32Load / 1000);
+		PWMPulseWidthSet(PWM1_BASE, PWM_OUT_7, ui8AdjustG * ui32Load / 1000);
+
+		SysCtlDelay(200000);
+
+
+
+	}
+	*/
+
 }

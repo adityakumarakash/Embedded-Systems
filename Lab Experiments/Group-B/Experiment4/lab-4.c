@@ -32,7 +32,7 @@ void switchPinConfig(void)
 	CR_F=GPIO_PIN_0|GPIO_PIN_4;
 
 	// GPIO PORTF Pin 0 and Pin4
-	GPIODirModeSet(GPIO_PORTF_BASE,GPIO_PIN_4,GPIO_DIR_MODE_IN); // Set Pin-4 of PORT F as Input.
+	GPIODirModeSet(GPIO_PORTF_BASE,GPIO_PIN_4,GPIO_DIR_MODE_IN); // Set Pin-0 and Pin-4 of PORT F as Input.
 	GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 	GPIOPadConfigSet(GPIO_PORTF_BASE,GPIO_PIN_4,GPIO_STRENGTH_12MA,GPIO_PIN_TYPE_STD_WPU);
 
@@ -52,7 +52,7 @@ void UARTIntHandler(void)
 	uint32_t ui32Status;
 	ui32Status = UARTIntStatus(UART0_BASE, true); 	//get interrupt status
 
-	UARTIntClear(UART0_BASE, ui32Status); 			//clear the asserted interrupts
+	UARTIntClear(UART0_BASE, ui32Status); 		//clear the asserted interrupts
 
 	char c = UARTCharGetNonBlocking(UART0_BASE);
 	if( c != 'S') return ;

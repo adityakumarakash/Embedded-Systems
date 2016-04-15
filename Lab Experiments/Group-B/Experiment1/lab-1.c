@@ -89,7 +89,7 @@ int main(void)
 	led = 2;
 
 	// Keep checking periodically if switch-1 and switch-2 are pressed.
-	// And correspondingly change the LED in use and the 'sw2status' counter.
+	// And correspondingly change the LED in use and increment the 'sw2status' counter.
 	while(1) {
 		SysCtlDelay(5000);
 		if(GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_4)==0x00) {

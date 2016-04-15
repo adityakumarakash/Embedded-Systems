@@ -62,12 +62,6 @@ int main(void)
 	}
 }
 
-/*
-* Function Name: nextLEDConfig
-* Input : None
-* Output : void
-* Description : Changes LED config from one state to next one.
-*/
 void nextLEDConfig(){
 	if (ui8LED == 2) {
 		ui8LED = 8;
