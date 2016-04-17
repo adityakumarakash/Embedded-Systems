@@ -3,60 +3,51 @@
  
 Group Info: 
 ------------ 
-+   Student Name (Roll Number) 
-+   Student Name (Roll Number) 
++   Aditya Kumar Akash (120050046)  (Team Leader)
++   Anurag Shirolkar (120050003) 
++   Nishant Kumar Singh (120050043)
++   Shyam JVS (120050053)
  
 Extension Of 
 ------------ 
  
-Have you extended your project from any other past porjects? Please mention the title here.  
+The project is made from scratch. It is not an extension of any other project.
  
 Project Description 
 ------------------- 
  
-This is a reame template. It is written using markdown syntax. To know more about markdown you can alwats refer to [Daring Fireball](http://daringfireball.net/projects/markdown/basics).  
-You can preview how your mardown looks when rendered [here](http://daringfireball.net/projects/markdown/dingus) 
- 
-Students are requested to use this format for the sake of uniformity and convinience. Also we can parse these files and then index them for easy searching.  
+Tracktor is a system that tracks the user in front of it and orients itself to face the user. It allows the user to keep device of size varying from that of phone to a tablet on it, allowing user to perform other household works while video calling or watching movie etc. the device.  
  
 Technologies Used 
 ------------------- 
  
-Remove the items that do no apply to your project and keep the remaining ones. 
+Following technologies have been used in the project 
  
-+   Embedded C 
-+   uCos 
-+   RTAI 
-+   MATLAB 
-+   Scilab 
-+   Xbee 
-+   JAVA 
-+   Python 
-+   Android 
-+   Kinect 
-+   Specialized Hardware 
-+   Gripper 
-+   Robotic Arm 
++   Python 2.7 
 +   OpenCV 
++   Raspbian
++   Raspberry Pi
     
  
  
 Installation Instructions 
 ========================= 
  
-If you need any software such as scilab, OpenCV etc. Please provide [links](http://example.com) to all these software.  
+The user doesn't need to install any softwares on the system. However the links to the above technologies are -
++   [Python 2.7](https://www.python.org/)
++   [OpenCV](http://opencv.org/)
++   [Raspbian](https://www.raspbian.org/)
  
  
 Demonstration Video 
 =========================  
-Add the youtube link of the screencast of your project demo.
++   [Screencast](https://www.youtube.com/watch?v=qWQz7CYZ5Fg)
++   [Working demo](https://www.youtube.com/watch?v=4U_MmdTst88)
 
 References 
 =========== 
- 
-Please give references to importance resources.  
- 
-+ [Title](http://example.org) 
-+ [Title](http://example.org) 
-+ [Title](http://example.org)
++   [Python 2.7](https://www.python.org/)
++   [OpenCV](http://opencv.org/)
++   [Raspbian](https://www.raspbian.org/)
+
 
